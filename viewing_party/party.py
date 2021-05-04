@@ -65,3 +65,11 @@ def get_friends_unique_watched(user_data):
         if title not in user_titles:
             friends_unique_movies.append({'title': title})
     return friends_unique_movies
+
+def get_available_recs(user_data):
+    movies = []
+    for friend in user_data["friends"]:
+        for movie in friend['watched']:
+            movies += [movie for movie in friend['watched'] if movie['host'] in user_data['subscriptions'] 
+                       and movie not in movies]
+    return movies
