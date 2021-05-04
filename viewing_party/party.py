@@ -44,7 +44,7 @@ def get_most_watched_genre(user_data):
     return winners[0]
 
 def get_unique_watched(user_data):
-    # returns a list of movies that main viewer has seen but none of their friends have seen
+    # returns a list of movies that user has seen but none of their friends have seen
     unique_movies = []
     friends_titles = set()
     for friend in user_data['friends']:
@@ -55,7 +55,7 @@ def get_unique_watched(user_data):
     return unique_movies
 
 def get_friends_unique_watched(user_data):
-    # returns a list of movies that main viewer has not seen but at least one of their friends have seen
+    # returns a list of movies that user has not seen but at least one of their friends have seen
     user_titles = [movie['title'] for movie in user_data['watched']]
     friends_titles = set()
     friends_unique_movies = []
@@ -67,10 +67,10 @@ def get_friends_unique_watched(user_data):
     return friends_unique_movies
 
 def get_available_recs(user_data):
-    # returns a list of movies that main viewer's friends  has not seen but at least one of their friends have seen
+    # returns a list of movies that user has not seen but at least one of their friends have seen, 
+    # and is available on a service user is subscribed to. 
     movies = []
     for friend in user_data["friends"]:
-        for movie in friend['watched']:
-            movies += [movie for movie in friend['watched'] if movie['host'] in user_data['subscriptions'] 
-                       and movie not in user_data['watched'] and movie not in movies]
+        movies += [movie for movie in friend['watched'] if movie['host'] in user_data['subscriptions'] 
+                   and movie not in user_data['watched'] and movie not in movies]
     return movies
