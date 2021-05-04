@@ -32,13 +32,19 @@ def get_watched_avg_rating(user_data):
 
 def get_most_watched_genre(user_data):
     movie_genre_dictionary = {}
+    if len(user_data['watched']) < 1:
+        return None
     for movie in user_data['watched']:
-        if movie['genre'] not in movie_genre_dictionary:
-            movie['genre'] = 1
-            print("HERE: " + str(movie_genre_dictionary))
-            return movie_genre_dictionary 
-        else:    
-            movie['genre'] += 1
-            print("NOW HERE: " + str(movie_genre_dictionary))
-        return movie_genre_dictionary 
+        if movie['genre'] not in movie_genre_dictionary.keys():
+            movie_genre_dictionary[movie['genre']] = 1
+
+        else:
+            movie_genre_dictionary[movie['genre']] += 1
+
+    most_watched = sorted(movie_genre_dictionary, key=movie_genre_dictionary.get)
+    print(movie_genre_dictionary)
+    print(most_watched[-1])
+    return most_watched[-1]  
+   
+
     
