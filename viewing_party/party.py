@@ -108,7 +108,6 @@ def get_new_rec_by_genre(user_data):
     fav_genre = get_most_watched_genre(user_data)
     friends_watched = get_friends_unique_watched(user_data)
     user_watched = get_unique_watched(user_data)
-
     recommendations = []
 
     for movie_item in friends_watched:
