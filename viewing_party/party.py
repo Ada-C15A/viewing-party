@@ -1,5 +1,4 @@
-#list of disctionaries, where the inner dictionaries represent movies,
-#and have keys: title, genre, and rating 
+# list of disctionaries, where the inner dictionaries represent movies, and have keys: title, genre, and rating 
 movies =[]
 
 def create_movie(title, genre, rating):
@@ -43,3 +42,26 @@ def get_most_watched_genre(user_data):
             genres[movie['genre']] = 1
         winners = [genre for genre, count in genres.items() if count == max(genres.values())]   
     return winners[0]
+
+def get_unique_watched(user_data):
+    # returns a list of movies that main viewer has seen but none of their friends have seen
+    unique_movies = []
+    friends_titles = set()
+    for friend in user_data['friends']:
+        friends_titles = friends_titles.union({film['title'] for film in friend['watched']})
+    for movie in user_data['watched']:
+        if movie['title'] not in friends_titles:
+            unique_movies.append(movie)
+    return unique_movies
+
+def get_friends_unique_watched(user_data):
+    # returns a list of movies that main viewer has not seen but at least one of their friends have seen
+    user_titles = [movie['title'] for movie in user_data['watched']]
+    friends_titles = set()
+    friends_unique_movies = []
+    for friend in user_data['friends']:
+        friends_titles = friends_titles.union({film['title'] for film in friend['watched']})
+    for title in friends_titles:
+        if title not in user_titles:
+            friends_unique_movies.append({'title': title})
+    return friends_unique_movies
