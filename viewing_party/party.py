@@ -41,7 +41,6 @@ def get_most_watched_genre(user_data):
     watched_count = {}
     most_watched = [user_data['watched'][0]['title'], 1]
     for movie in user_data['watched']:
-        print(movie)
         if movie['genre'] in watched_count:
             watched_count[movie['genre']] += 1
         else:
@@ -80,3 +79,53 @@ def get_friends_unique_watched(user_data):
     return unique_watched
 
 
+def get_available_recs(user_data):
+    seen = set()
+    subscriptions = set()
+    recommendations = []
+
+    for user_watched_movie in user_data['watched']:
+        seen.add(user_watched_movie['title'])
+
+    for service in user_data['subscriptions']:
+        subscriptions.add(service)
+
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            if movie["title"] not in seen and movie['host'] in subscriptions:
+                recommendations.append(movie)
+                seen.add(movie["title"])
+
+    return recommendations
+
+
+def get_new_rec_by_genre(user_data):
+    recommendations = []
+    seen = set()
+    most_watched = get_most_watched_genre(user_data)
+
+    for user_watched_movie in user_data['watched']:
+        seen.add(user_watched_movie['title'])
+
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            if movie["title"] not in seen and movie['genre'] == most_watched:
+                recommendations.append(movie)
+                seen.add(movie["title"])
+
+    return recommendations
+
+
+def get_rec_from_favorites(user_data):
+    recommended = []
+
+    friends_seen_set = set()
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            friends_seen_set.add(movie["title"])
+
+    for movie in user_data["favorites"]:
+        if movie["title"] not in friends_seen_set:
+            recommended.append(movie)
+
+    return recommended
