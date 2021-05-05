@@ -88,15 +88,13 @@ def get_available_recs(user_data):
     user_watched = user_data['watched']
     potential_list = []
     
-    # print(user_subscriptions)
     for item in (user_data['friends']):
         for i in item['watched']:
-                print("ITEM 1: " + str(i))
-                potential_list.append(i)
-        #print("USER SUBS: " + str(user_subscriptions))
-            #print(potential_list)
+            potential_list.append(i)
+                
     for item in potential_list:
-        if item in user_subscriptions:
-            recommended_movies.append(item)
-            #print(recommended_movies)
+        if item['host'] in user_subscriptions:
+            if item not in recommended_movies:
+                recommended_movies.append(item)
+
     return recommended_movies
