@@ -44,7 +44,7 @@ def get_most_watched_genre(user_data):
     return winners[0]
 
 def get_unique_watched(user_data):
-    # returns a list of movies that user has seen but none of their friends have seen
+    # Returns a list of movies that user has seen but none of their friends have seen.
     unique_movies = []
     friends_titles = set()
     for friend in user_data['friends']:
@@ -55,7 +55,7 @@ def get_unique_watched(user_data):
     return unique_movies
 
 def get_friends_unique_watched(user_data):
-    # returns a list of movies that user has not seen but at least one of their friends have seen
+    # Returns a list of movies that user has not seen but at least one of their friends have seen.
     user_titles = [movie['title'] for movie in user_data['watched']]
     friends_titles = set()
     friends_unique_movies = []
@@ -67,10 +67,28 @@ def get_friends_unique_watched(user_data):
     return friends_unique_movies
 
 def get_available_recs(user_data):
-    # returns a list of movies that user has not seen but at least one of their friends have seen, 
+    # Returns a list of movies that user has not seen but at least one of their friends have seen, 
     # and is available on a service user is subscribed to. 
     movies = []
     for friend in user_data["friends"]:
         movies += [movie for movie in friend['watched'] if movie['host'] in user_data['subscriptions'] 
                    and movie not in user_data['watched'] and movie not in movies]
     return movies
+
+def get_new_rec_by_genre(user_data):
+    # Returns a list of movies that user has not seen but at least one of their friends have seen, 
+    # and whose genre is user's most watched genre. 
+    top_genre = get_most_watched_genre(user_data)
+    movies = [] 
+    for friend in user_data["friends"]:
+        movies += [movie for movie in friend['watched'] if movie['genre'] == top_genre
+                   and movie not in user_data['watched'] and movie not in movies]
+    return movies
+
+
+def get_rec_from_favorites(user_data):
+    # Returns a list of movies from user's favorites that none of their friends have seen.
+    # Assumes all movies in user's favorites are also in user's watched list.
+    unique_watched = get_unique_watched(user_data)      
+    recommendations = [movie for movie in unique_watched if movie in user_data['favorites']]
+    return recommendations
