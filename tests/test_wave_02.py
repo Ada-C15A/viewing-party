@@ -28,7 +28,7 @@ def test_get_watched_avg_rating_calculates_watched_average_rating():
     average = get_watched_avg_rating(janes_data)
 
     # Assert
-    assert average == pytets.approx(3.56666666664)
+    assert average == pytest.approx(3.56666666664)
 
 
 def test_get_watched_avg_rating_returns_zero_for_empty_list():
@@ -78,6 +78,7 @@ def test_get_most_watched_genre_returns_most_frequent_genre_from_list():
     # Assert
     assert popular_genre == "Intrigue"
 
+
 def test_get_most_watched_genre_returns_most_frequent_genre_from_list_even_when_alphabetically_smaller():
     # Arrange
     janes_data = {
@@ -110,6 +111,7 @@ def test_get_most_watched_genre_returns_most_frequent_genre_from_list_even_when_
 
     # Assert
     assert popular_genre == "Action"
+
 
 def test_get_most_watched_genre_returns_None_if_empty_watched():
     # Arrange
