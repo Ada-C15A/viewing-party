@@ -103,7 +103,7 @@ def get_new_rec_by_genre(user_data):
     recs_by_genre_list = []
     potential_list = []      
     genre_to_find = get_most_watched_genre(user_data)
-    # potential_movies = get_available_recs(user_data)
+
     for item in (user_data['friends']):
         for i in item['watched']:
             potential_list.append(i)
@@ -111,3 +111,21 @@ def get_new_rec_by_genre(user_data):
         if movie['genre'] == genre_to_find:
             recs_by_genre_list.append(movie)
     return recs_by_genre_list
+
+def get_rec_from_favorites(user_data):
+    user_fav_movies = []
+    recommended_movies = []
+    friends_movie_list = []
+    # potential_movies = get_friends_unique_watched(user_data)
+    for movie in user_data['favorites']:
+        user_fav_movies.append(movie)
+    
+    for friend in user_data['friends']:
+        for title in friend['watched']:
+            friends_movie_list.append(title['title'])
+        
+    for movie in user_fav_movies:
+        if movie['title'] not in friends_movie_list:
+            recommended_movies.append(movie)
+    
+    return recommended_movies
