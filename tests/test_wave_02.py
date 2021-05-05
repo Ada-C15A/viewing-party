@@ -28,7 +28,7 @@ def test_get_watched_avg_rating_calculates_watched_average_rating():
     average = get_watched_avg_rating(janes_data)
 
     # Assert
-    assert average == pytest.approx(3.56666666664)
+    assert average == pytets.approx(3.56666666664)
 
 
 def test_get_watched_avg_rating_returns_zero_for_empty_list():
