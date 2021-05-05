@@ -81,3 +81,22 @@ def get_friends_unique_watched(user_data):
                 continue
             
     return unique_list
+
+def get_available_recs(user_data):
+    recommended_movies = []
+    user_subscriptions = user_data['subscriptions']
+    user_watched = user_data['watched']
+    potential_list = []
+    
+    # print(user_subscriptions)
+    for item in (user_data['friends']):
+        for i in item['watched']:
+                print("ITEM 1: " + str(i))
+                potential_list.append(i)
+        #print("USER SUBS: " + str(user_subscriptions))
+            #print(potential_list)
+    for item in potential_list:
+        if item in user_subscriptions:
+            recommended_movies.append(item)
+            #print(recommended_movies)
+    return recommended_movies
