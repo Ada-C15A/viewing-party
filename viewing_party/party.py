@@ -36,15 +36,31 @@ def get_most_watched_genre(user_data):
         return None
     for movie in user_data['watched']:
         if movie['genre'] not in movie_genre_dictionary.keys():
-            movie_genre_dictionary[movie['genre']] = 1
+            movie_genre_dictionary[movie['genre']] = 1 
 
         else:
             movie_genre_dictionary[movie['genre']] += 1
 
     most_watched = sorted(movie_genre_dictionary, key=movie_genre_dictionary.get)
-    print(movie_genre_dictionary)
-    print(most_watched[-1])
     return most_watched[-1]  
    
+def get_unique_watched(user_data):
+    user_movie_list = []
+    friends_movie_list = []
+    unique_list = []
+    for movie in user_data['watched']:
+        user_movie_list.append(movie['title'])
 
-    
+    for friend in user_data['friends']:
+        for title in friend['watched']:
+            friends_movie_list.append(title['title'])
+ 
+    for m in user_movie_list:
+        if m not in friends_movie_list:
+            unique_list.append({'title': m })
+
+    return unique_list
+
+
+def get_friends_unique_watched(user_data):
+    pass
