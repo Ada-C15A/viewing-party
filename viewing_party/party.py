@@ -66,10 +66,7 @@ def get_unique_watched(user_data):
 
 def get_friends_unique_watched(user_data):
     unique_watched = []
-    seen = set()
-
-    for user_watched_movie in user_data['watched']:
-        seen.add(user_watched_movie['title'])
+    seen = helper_creates_set_for_user_watched(user_data)
 
     for friend in user_data["friends"]:
         for movie in friend["watched"]:
@@ -80,12 +77,9 @@ def get_friends_unique_watched(user_data):
 
 
 def get_available_recs(user_data):
-    seen = set()
     subscriptions = set()
     recommendations = []
-
-    for user_watched_movie in user_data['watched']:
-        seen.add(user_watched_movie['title'])
+    seen = helper_creates_set_for_user_watched(user_data)
 
     for service in user_data['subscriptions']:
         subscriptions.add(service)
@@ -101,11 +95,8 @@ def get_available_recs(user_data):
 
 def get_new_rec_by_genre(user_data):
     recommendations = []
-    seen = set()
     most_watched = get_most_watched_genre(user_data)
-
-    for user_watched_movie in user_data['watched']:
-        seen.add(user_watched_movie['title'])
+    seen = helper_creates_set_for_user_watched(user_data)
 
     for friend in user_data["friends"]:
         for movie in friend["watched"]:
@@ -129,3 +120,13 @@ def get_rec_from_favorites(user_data):
             recommended.append(movie)
 
     return recommended
+
+
+######## HELPERS ############
+
+
+def helper_creates_set_for_user_watched(user_data):
+    seen = set()
+    for user_watched_movie in user_data['watched']:
+        seen.add(user_watched_movie['title'])
+    return seen
