@@ -98,3 +98,16 @@ def get_available_recs(user_data):
                 recommended_movies.append(item)
 
     return recommended_movies
+
+def get_new_rec_by_genre(user_data):
+    recs_by_genre_list = []
+    potential_list = []      
+    genre_to_find = get_most_watched_genre(user_data)
+    # potential_movies = get_available_recs(user_data)
+    for item in (user_data['friends']):
+        for i in item['watched']:
+            potential_list.append(i)
+    for movie in potential_list:
+        if movie['genre'] == genre_to_find:
+            recs_by_genre_list.append(movie)
+    return recs_by_genre_list
