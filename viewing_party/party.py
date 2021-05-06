@@ -1,3 +1,4 @@
+# test_wave_01
 def create_movie(movie_title, genre, rating):
     movie={}
     if movie_title == None or genre == None or rating ==None :
@@ -56,3 +57,49 @@ def watch_movie(janes_data, name):
                     print("jj",janes_data)
                 index+=1
     return janes_data
+
+
+
+# test_wave_02
+def get_watched_avg_rating(janes_data):
+    result=0
+    index=0
+    if len(janes_data["watched"]) == 0:
+       return 0.0
+
+    for key, values in janes_data.items():
+        for movie_title in values:
+            if len(values) != 0:
+               result+=values[index]["rating"]
+               index+=1
+            else:
+               return 0.0
+    return result/len(janes_data["watched"])
+
+
+
+def get_most_watched_genre(janes_data):
+    max_genre={}
+    
+    for values in janes_data.values():
+        if len(values) == 0:
+            return None
+        for movie_name in values:
+          
+            if movie_name["genre"] not in max_genre:
+               
+               max_genre[movie_name["genre"]]=1
+               
+            else:
+           
+              max_genre[movie_name["genre"]]+=1
+              
+
+           
+    max_num=max_genre.values()
+    max_num=max(max_num)
+
+
+    for key, value in max_genre.items():
+        if value == max_num:
+            return key
