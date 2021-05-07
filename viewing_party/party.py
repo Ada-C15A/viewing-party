@@ -1,3 +1,4 @@
+#Wave-1
 def create_movie(title, genre, rating):
     if title and genre and rating:
         movie_details = {
@@ -58,7 +59,7 @@ def get_most_watched_genre(user_data):
             most_genre_watched = name            
     return most_genre_watched
 
-#wave-3
+#Wave-3
 def get_friends_watch_list(user_data):
     friends_watched_list = []
     for friend in user_data["friends"]:
@@ -83,3 +84,14 @@ def get_friends_unique_watched(user_data):
         if title not in user_data["watched"] and title not in list_friends_unique_watched:
             list_friends_unique_watched.append(title)
     return list_friends_unique_watched
+
+#Wave-4
+def get_available_recs(user_data):
+    recommended_movies = []
+    friends_unique_watched = get_friends_unique_watched(user_data)
+    
+    for movie in friends_unique_watched:
+        if movie["host"] in user_data["subscriptions"]:
+            recommended_movies.append(movie)   
+    return recommended_movies
+        
