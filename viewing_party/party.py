@@ -114,4 +114,3 @@ def get_rec_from_favorites(user_data):
         if movie in user_data["favorites"]:
             rec_from_favorites.append(movie)
     return rec_from_favorites
-        
