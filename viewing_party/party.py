@@ -91,3 +91,31 @@ def get_available_recs(user_data):
         if item_watched not in recommended:
             recommended.append(item_watched)
   return recommended
+
+def get_new_rec_by_genre(user_data):
+  user_pop_genre = ""
+  popular_genre = {}
+  recommended = []
+
+  for user_watched in user_data["watched"]:
+    if user_watched["genre"] not in popular_genre:
+      popular_genre[user_watched["genre"]] = 1
+    else:
+      popular_genre[user_watched["genre"]] += 1
+
+  max_count = 0
+  pop_genre = None
+  for genre in popular_genre:
+    count = popular_genre[genre]
+    if count > max_count:
+      max_count = count
+      pop_genre = genre
+
+  user_pop_genre = pop_genre
+
+  for friend_watched in user_data["friends"]:
+    for friends_watched_movie in friend_watched["watched"]:
+      if friends_watched_movie not in user_data["watched"] and \
+          friends_watched_movie["genre"] == user_pop_genre:
+        recommended.append(friends_watched_movie)
+  return recommended
