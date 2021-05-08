@@ -20,10 +20,10 @@ def add_to_watchlist(user_data, movie):
     return user_data
 
 def watch_movie(user_data, title):
-    for movie_in_question in user_data["watchlist"]:
-        if movie_in_question["title"] == title:
-            user_data["watchlist"].remove(movie_in_question)
-            user_data["watched"].append(movie_in_question)
+    for friend_watched in user_data["watchlist"]:
+        if friend_watched["title"] == title:
+            user_data["watchlist"].remove(friend_watched)
+            user_data["watched"].append(friend_watched)
     return user_data
 
 def get_watched_avg_rating(user_data):
@@ -31,17 +31,17 @@ def get_watched_avg_rating(user_data):
         return 0
     else:
         total_ratings = 0
-        for movie_in_question in user_data["watched"]:
-            total_ratings += movie_in_question["rating"]
+        for friend_watched in user_data["watched"]:
+            total_ratings += friend_watched["rating"]
     return total_ratings/len(user_data["watched"])
 
 def get_most_watched_genre(user_data):
     popular_genre = {}
-    for movie_in_question in user_data["watched"]:
-        if movie_in_question["genre"] not in popular_genre:
-            popular_genre[movie_in_question["genre"]] = 1
+    for friend_watched in user_data["watched"]:
+        if friend_watched["genre"] not in popular_genre:
+            popular_genre[friend_watched["genre"]] = 1
         else:
-            popular_genre[movie_in_question["genre"]] += 1
+            popular_genre[friend_watched["genre"]] += 1
     # Question for later
     # max_key = max(popular_genre, key=popular_genre.get)
     # return max_key
@@ -53,3 +53,16 @@ def get_most_watched_genre(user_data):
             max_count = count
             pop_genre = genre
     return pop_genre
+
+def get_unique_watched(user_data):
+  options_to_watch = []
+  friends_watched = []
+  for friend_watched in user_data["friends"]:
+    for movie_watched in friend_watched['watched']:
+        if movie_watched not in friends_watched:
+            friends_watched.append(movie_watched)
+
+  for user_watched in user_data["watched"]:
+      if user_watched not in friends_watched:
+        options_to_watch.append(user_watched)
+  return options_to_watch
