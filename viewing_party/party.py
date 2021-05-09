@@ -103,3 +103,46 @@ def get_most_watched_genre(janes_data):
     for key, value in max_genre.items():
         if value == max_num:
             return key
+
+
+# test_wave_03
+friends_watched_list=[]
+def get_unique_watched(amandas_data):
+    
+    result=[]
+    for watched in amandas_data["friends"]:
+       
+        for key_val, val_list in watched.items():
+            
+            for vals in val_list:
+              
+                for title, val in vals.items():
+                   
+                    friends_watched_list.append(val)
+    
+    for watched_list in amandas_data["watched"]:
+        for key_val,vals in watched_list.items():
+            if vals not in friends_watched_list:
+                result.append(watched_list)
+    # print("sslit",friends_watched_list)
+    return result
+
+
+def get_friends_unique_watched(amandas_data):
+    user_watched_list=[]
+    result=[]
+    for watched in amandas_data["watched"]:
+        print(watched)
+        # for key_val, val_list in watched.items():
+        user_watched_list.append(watched)
+    for friends_watched in amandas_data["friends"]:
+        for watched, watched_list in friends_watched.items():
+            print("ss",watched_list)
+            for val in watched_list:
+                print("aas",val)
+                if val not in user_watched_list:
+                    result.append(val)
+    return [dict(t) for t in {tuple(d.items()) for d in result}]
+
+
+# test_wave_04
