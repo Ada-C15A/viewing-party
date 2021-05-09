@@ -146,3 +146,29 @@ def get_friends_unique_watched(amandas_data):
 
 
 # test_wave_04
+
+
+def get_available_recs(amandas_data):
+    print("hh",amandas_data["watched"])
+    empty_user_watched_list=True
+    friend_watched_list=[]
+    
+    result=[]
+    for watched in amandas_data["friends"]:
+      
+        for key_val,val_list in watched.items():
+       
+            for val in val_list:
+               
+                friend_watched_list.append(val)
+    print(friend_watched_list)
+
+    while empty_user_watched_list:
+        for item in friend_watched_list:
+            
+            if item["host"] in amandas_data["subscriptions"]:
+                result.append(item)
+        
+        empty_user_watched_list=False
+
+    return [dict(t) for t in {tuple(d.items()) for d in result}]
