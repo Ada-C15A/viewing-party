@@ -28,3 +28,37 @@ def watch_movie(user_data, watch_title):
             user_data["watchlist"].pop(i)
         i += 1
     return user_data
+
+def get_watched_avg_rating(user_data):
+    if len(user_data["watched"]) == 0:
+        return 0
+    avg_list = []
+    for movie in user_data["watched"]:
+        avg_list.append(movie["rating"])
+    avg_list_total = sum(avg_list)
+    avg_rating = avg_list_total / len(avg_list)
+    # return round(avg_rating, 2)
+    return avg_rating
+
+def get_most_watched_genre(user_data):
+    if len(user_data["watched"]) < 1:
+        return None
+    genre_dict = {}
+    for movie in user_data["watched"]:
+        genre = movie["genre"]
+
+        try:
+            genre_dict[genre] += 1
+        except:
+            genre_dict[genre] = 1
+
+    highest_val = 0
+    for genre, value in genre_dict.items():
+        if value > highest_val:
+            highest_val = value
+            most_watched_genre = genre
+
+    return most_watched_genre
+
+
+        
