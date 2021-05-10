@@ -44,7 +44,6 @@ def get_most_watched_genre(user_data):
     for movie in watched_movie_data:
         genre_of_movie = movie["genre"]
         genre_list.append(genre_of_movie)
-
     new_dict = {}
     for genre in genre_list:
         new_dict[genre] = genre_list.count(genre)
