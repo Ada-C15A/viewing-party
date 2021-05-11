@@ -60,5 +60,36 @@ def get_most_watched_genre(user_data):
 
     return most_watched_genre
 
+def get_unique_watched(user_data):
+    unique_list = []
+    friends_watched = []
+    flat_friends_watchlist = []
+
+    for friend in user_data["friends"]:
+        watched = friend['watched']
+        friends_watched.append(watched)
+    flat_friends_watchlist = sum(friends_watched, [])
+
+    for watched in user_data['watched']:
+        if watched not in flat_friends_watchlist:
+            unique_list.append(watched)
+
+    return unique_list
+
+def get_friends_unique_watched(user_data):
+    friends_unique_list = []
+    friends_watched = []
+    flat_friends_watchlist = []
+
+    for friend in user_data["friends"]:
+        watched = friend['watched']
+        friends_watched.append(watched)
+    flat_friends_watchlist = sum(friends_watched, [])
+
+    for friend_watched in flat_friends_watchlist:
+        if friend_watched not in user_data["watched"] and friend_watched not in friends_unique_list:
+            friends_unique_list.append(friend_watched)
+
+    return friends_unique_list
 
         
