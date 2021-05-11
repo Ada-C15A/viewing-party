@@ -48,3 +48,26 @@ def get_most_watched_genre(user_data):
     for genre in genre_list:
         new_dict[genre] = genre_list.count(genre)
     return genre
+
+def get_unique_watched(user_data):
+    friends_watched_list = []
+    users_unique_watched_list = []
+    for friends_list in user_data["friends"]:
+        for movie in friends_list["watched"]:
+            friends_watched_list.append(movie["title"])
+    for movie in user_data["watched"]:
+        if movie["title"] not in friends_watched_list:
+            users_unique_watched_list.append(movie)
+    return users_unique_watched_list
+
+def get_friends_unique_watched(user_data):
+    friends_watched_list = []
+    friends_unique_watched_list = []
+    for friends_list in user_data["friends"]:
+        for movie in friends_list["watched"]:
+            if movie not in friends_watched_list:
+                friends_watched_list.append(movie)
+    for i in range(len(friends_watched_list)):
+        if friends_watched_list[i] not in user_data["watched"]:
+            friends_unique_watched_list.append(friends_watched_list[i])
+    return friends_unique_watched_list
