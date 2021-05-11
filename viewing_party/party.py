@@ -17,13 +17,13 @@ def add_to_watchlist(user_data, movie):
     user_data["watchlist"].append(movie)
     return user_data
 
-def watch_movie(user_data, watch_title):
+def watch_movie(user_data, title):
     for movie in user_data["watchlist"]:
-        if movie["title"] == watch_title:
+        if movie["title"] == title:
             add_to_watched(user_data, movie)
     i = 0
     while i < len(user_data["watchlist"]):
-        if user_data["watchlist"][i]["title"] == watch_title:
+        if user_data["watchlist"][i]["title"] == title:
             user_data["watchlist"].pop(i)
         i += 1
     return user_data
