@@ -92,4 +92,12 @@ def get_friends_unique_watched(user_data):
 
     return friends_unique_list
 
-        
+def get_available_recs(user_data):
+    available_recs = []
+    friends_watched = get_friends_unique_watched(user_data)
+
+    for movie in friends_watched:
+        if movie["host"] in user_data["subscriptions"]:
+            available_recs.append(movie)
+    
+    return available_recs
