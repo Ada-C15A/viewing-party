@@ -24,3 +24,19 @@ def get_watched_avg_rating(user_data):
         cumulative_ratings += item["rating"]
 
     return cumulative_ratings/len(watched) if len(watched) > 0 else 0
+
+def get_most_watched_genre(user_data):
+    counts = {}
+    watched = user_data["watched"]
+    popular = ['',0]
+    for item in watched:
+        this_genre_count = item["genre"]
+        if this_genre_count not in counts:
+            counts[this_genre_count] = 1
+        else:
+            counts[this_genre_count] += 1
+        if counts[this_genre_count] > popular[1]:
+            popular[0] = this_genre_count
+            popular[1] = counts[this_genre_count]
+
+    return popular[0] if popular[1] > 0 else None
