@@ -44,10 +44,11 @@ def get_most_watched_genre(user_data):
     for movie in watched_movie_data:
         genre_of_movie = movie["genre"]
         genre_list.append(genre_of_movie)
-    new_dict = {}
+    genre_count = {}
     for genre in genre_list:
-        new_dict[genre] = genre_list.count(genre)
-    return genre
+        genre_count[genre] = genre_list.count(genre)
+    most_watched_genre = max(genre_count, key=genre_count.get)
+    return most_watched_genre
 
 def get_unique_watched(user_data):
     friends_watched_list = []
