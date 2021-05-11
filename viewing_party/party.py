@@ -20,7 +20,6 @@ def add_to_watchlist(user_data, movie):
 def watch_movie(user_data, watch_title):
     for movie in user_data["watchlist"]:
         if movie["title"] == watch_title:
-            # watched_movie = movie
             add_to_watched(user_data, movie)
     i = 0
     while i < len(user_data["watchlist"]):
@@ -37,7 +36,6 @@ def get_watched_avg_rating(user_data):
         avg_list.append(movie["rating"])
     avg_list_total = sum(avg_list)
     avg_rating = avg_list_total / len(avg_list)
-    # return round(avg_rating, 2)
     return avg_rating
 
 def get_most_watched_genre(user_data):
