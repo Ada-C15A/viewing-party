@@ -40,3 +40,22 @@ def get_most_watched_genre(user_data):
             popular[1] = counts[this_genre_count]
 
     return popular[0] if popular[1] > 0 else None
+
+def get_unique_watched(user_data):
+    unique = []
+    watched = user_data["watched"]
+
+def get_rec_from_favorites(user_data):
+    favs = user_data["favorites"]
+    friends = user_data["friends"]
+    recs = []
+    for i in range(len(favs)):
+        friend_watched = False
+        for friend in friends:
+            for watched in friend["watched"]:
+                if watched["title"] == favs[i]["title"]:
+                    friend_watched = True
+        if not friend_watched:
+            recs.append(favs[i])
+
+    return recs
