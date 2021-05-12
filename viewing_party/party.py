@@ -1,3 +1,5 @@
+import copy
+
 def create_movie(movie_title, genre, rating):
    return {"title":movie_title, "genre":genre, "rating":rating} if (movie_title and genre and rating) else None
 
@@ -42,8 +44,20 @@ def get_most_watched_genre(user_data):
     return popular[0] if popular[1] > 0 else None
 
 def get_unique_watched(user_data):
-    unique = []
     watched = user_data["watched"]
+    uniques = copy.deepcopy(watched)
+    # for item in watched:
+    for friend in user_data["friends"]:
+        for item in friend["watched"]:
+            if item in watched and item in uniques:
+                uniques.remove(item)
+
+    return uniques
+
+def get_friends_unique_watched(user_data):
+    fr_uniques = []
+
+    return fr_uniques
 
 def get_available_recs(user_data):
     user_watched = user_data["watched"]
