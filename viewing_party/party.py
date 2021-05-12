@@ -1,11 +1,11 @@
-def create_movie(title, genre, rating):
+def create_movie(movie_title, genre, rating):
     dict_of_movies = {
-        "title" : title,
+        "title" : movie_title,
         "genre" : genre,
         "rating" : rating
     }
 
-    if not title or not genre or not rating:
+    if not movie_title or not genre or not rating:
         return None
 
 def add_to_watched(user_data, movie):
@@ -16,9 +16,9 @@ def add_to_watchlist(user_data, movie):
     user_data["watchlist"].append(movie)
     return user_data
 
-def watch_movie(user_data, title):
+def watch_movie(user_data, movie):
     for movie in user_data["watchlist"]:
-        if movie["title"] == title:
+        if movie["title"] == movie:
             user_data["watchlist"].remove(movie)
             user_data["watched"].append(movie)
         return user_data
@@ -112,6 +112,26 @@ def get_available_recs(user_data):
     
     return recommended_movies
 
+def get_new_rec_by_genre(user_data):
 
+    recommended_genre = []
+    fave_genre = get_most_watched_genre(user_data)
+    friends_watched = get_friends_unique_watched(user_data)
 
+    for movie in friends_watched:
+        if movie["genre"] == fave_genre:
+            recommended_genre.append(movie)
+    
+    return recommended_genre
 
+def get_rec_from_favorites(user_data):
+    
+    recs_from_faves = []
+    unique_watched_list = get_unique_watched(user_data)
+    faves = user_data["favorites"]
+
+    for movie in unique_watched_list:
+        if movie in faves:
+            recs_from_faves.append(movie)
+    
+    return recs_from_faves
