@@ -52,3 +52,66 @@ def get_most_watched_genre(user_data):
     
     return most_watched
 
+def get_unique_watched(user_data):
+
+    user_movie_list = []
+    friends_watched = []
+    unique_watched_list = []
+    
+    for movie in user_data["watched"]:
+        user_movie_list.append(movie["title"])
+
+    for friend in user_data["friends"]:
+        for title in friend["watched"]:
+            friends_watched.append(title["title"])
+
+    for film in user_movie_list:
+        if film not in friends_watched:
+            unique_watched_list.append({title:film})
+    
+    return unique_watched_list
+
+def get_friends_unique_watched(user_data):
+    
+    user_movie_list = []
+    friends_watched = []
+    unique_watched_list = []
+    
+    for movie in user_data["watched"]:
+        user_movie_list.append(movie["title"])
+
+    for friend in user_data["friends"]:
+        for title in friend["watched"]:
+            friends_watched.append(title["title"])
+    
+    for film in friends_watched:
+        if film not in user_movie_list:
+            print("This movie not in list: " + film)
+
+            if {"title":film} not in unique_watched_list:
+                unique_watched_list.append({"title":film})
+                print(unique_watched_list)
+            else:
+                continue
+        
+    return unique_watched_list
+
+def get_available_recs(user_data):
+    
+    recommended_movies = []
+    friends_watched= []
+
+    for watched in user_data["friends"]:
+        for movie in watched["watched"]:
+            if movie not in friends_watched:
+                friends_watched.append(movie)
+            
+    for movie in friends_watched:
+        if movie["host"] in user_data["subscriptions"]:
+            recommended_movies.append(movie)
+    
+    return recommended_movies
+
+
+
+
