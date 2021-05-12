@@ -45,6 +45,32 @@ def get_unique_watched(user_data):
     unique = []
     watched = user_data["watched"]
 
+def get_new_rec_by_genre(user_data):
+    user_watched = user_data["watched"]
+    num_watched = len(user_watched)
+    recs = []
+    if num_watched > 0:
+        genres = {}
+        top_genre = ""
+        for i in range(num_watched):
+            current = user_watched[i]["genre"]
+            curr_top = ['',0]
+            if current not in genres:
+                genres[current] = 1
+            else:
+                genres[current] += 1
+                if genres[current] < curr_top[1]:
+                    top_genre = current
+                    curr_top[0] = current
+                    curr_top[1] = genres[current]
+
+        for friend in user_data["friends"]:
+            for item in friend["watched"]:
+                if item["title"] not in user_watched and item["genre"] == top_genre[0]:
+                    recs.append(item["title"])
+
+    return recs
+
 def get_rec_from_favorites(user_data):
     favs = user_data["favorites"]
     friends = user_data["friends"]
