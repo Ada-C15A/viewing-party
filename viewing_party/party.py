@@ -45,6 +45,17 @@ def get_unique_watched(user_data):
     unique = []
     watched = user_data["watched"]
 
+def get_available_recs(user_data):
+    user_watched = user_data["watched"]
+    subscriptions = user_data["subscriptions"]
+    recs = []
+    for friend in user_data["friends"]:
+        for item in friend["watched"]:
+            if item not in user_watched and item["host"] in subscriptions and item not in recs:
+                recs.append(item)
+
+    return recs
+
 def get_new_rec_by_genre(user_data):
     user_watched = user_data["watched"]
     num_watched = len(user_watched)
