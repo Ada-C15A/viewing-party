@@ -11,7 +11,7 @@ def create_movie(movie_title, genre, rating):
         
 
 def add_to_watched(user_data, movie):
-    # print(user_data,user_data["watched"])
+ 
     if len(user_data["watched"]) == 0:
     
         user_data["watched"]=[movie]
@@ -106,25 +106,20 @@ def get_most_watched_genre(janes_data):
 
 
 # test_wave_03
-friends_watched_list=[]
+
 def get_unique_watched(amandas_data):
-    
+    friends_watched_list=[]
     result=[]
-    for watched in amandas_data["friends"]:
-       
-        for key_val, val_list in watched.items():
-            
-            for vals in val_list:
-              
-                for title, val in vals.items():
+    for friend in amandas_data["friends"]:
+        for movie in friend["watched"]:
+             friends_watched_list.append(movie["title"])
+             print("ss",movie["title"])
                    
-                    friends_watched_list.append(val)
-    
     for watched_list in amandas_data["watched"]:
         for key_val,vals in watched_list.items():
             if vals not in friends_watched_list:
+                print("ddd",vals)
                 result.append(watched_list)
-    # print("sslit",friends_watched_list)
     return result
 
 
@@ -133,7 +128,7 @@ def get_friends_unique_watched(amandas_data):
     result=[]
     for watched in amandas_data["watched"]:
         print(watched)
-        # for key_val, val_list in watched.items():
+      
         user_watched_list.append(watched)
     for friends_watched in amandas_data["friends"]:
         for watched, watched_list in friends_watched.items():
@@ -172,3 +167,42 @@ def get_available_recs(amandas_data):
         empty_user_watched_list=False
 
     return [dict(t) for t in {tuple(d.items()) for d in result}]
+
+
+# test_wave_05
+def get_new_rec_by_genre(sonyas_data):
+    genre=[]
+    user_watched=[]
+    result=[]
+    for user_movie in sonyas_data["watched"]:
+            if user_movie["genre"] not in genre:
+               genre.append(user_movie["genre"])
+            user_watched.append(user_movie["title"])
+            print("dd",genre,user_watched)
+    
+    for friends_movie in sonyas_data["friends"]:
+        for movie in friends_movie["watched"]:
+           if movie["title"] not in user_watched and movie["genre"] in genre:
+              print("hhh")
+              result.append(movie)
+    print("fff",result)
+    return result
+
+
+
+def get_rec_from_favorites(sonyas_data):
+    user_favorite_list=[]
+    friends=sonyas_data["friends"][0]["watched"]+sonyas_data["friends"][1] ["watched"]
+    result=[]
+    for favorites_movie in sonyas_data["favorites"]:
+        if favorites_movie in sonyas_data["watched"]:
+           user_favorite_list.append(favorites_movie)
+        print(user_favorite_list)
+
+  
+    for favorite in user_favorite_list:
+            if favorite not in friends:
+               result.append(favorite)
+             
+
+    return result
