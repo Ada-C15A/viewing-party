@@ -1,12 +1,14 @@
 def create_movie(movie_title, genre, rating):
+
+    if not movie_title or not genre or not rating:
+        return None
+
     dict_of_movies = {
         "title" : movie_title,
         "genre" : genre,
         "rating" : rating
     }
-
-    if not movie_title or not genre or not rating:
-        return None
+    return dict_of_movies
 
 def add_to_watched(user_data, movie):
     user_data["watched"].append(movie)
@@ -16,12 +18,13 @@ def add_to_watchlist(user_data, movie):
     user_data["watchlist"].append(movie)
     return user_data
 
-def watch_movie(user_data, movie):
+def watch_movie(user_data, movie_title):
     for movie in user_data["watchlist"]:
-        if movie["title"] == movie:
+        if movie_title in movie["title"]:
             user_data["watchlist"].remove(movie)
-            user_data["watched"].append(movie)
-        return user_data
+            add_to_watched(user_data, movie)
+            return user_data
+    return user_data
 
 def get_watched_avg_rating(user_data):
     
@@ -65,9 +68,9 @@ def get_unique_watched(user_data):
         for title in friend["watched"]:
             friends_watched.append(title["title"])
 
-    for film in user_movie_list:
-        if film not in friends_watched:
-            unique_watched_list.append({title:film})
+    for movie in user_movie_list:
+        if movie not in friends_watched:
+            unique_watched_list.append({"title":movie})
     
     return unique_watched_list
 
@@ -115,13 +118,15 @@ def get_available_recs(user_data):
 def get_new_rec_by_genre(user_data):
 
     recommended_genre = []
+    potential_list = []
     fave_genre = get_most_watched_genre(user_data)
-    friends_watched = get_friends_unique_watched(user_data)
 
-    for movie in friends_watched:
+    for movie in user_data["friends"]:
+        for i in movie["watched"]:
+            potential_list.append(i)
+    for movie in potential_list:
         if movie["genre"] == fave_genre:
             recommended_genre.append(movie)
-    
     return recommended_genre
 
 def get_rec_from_favorites(user_data):
